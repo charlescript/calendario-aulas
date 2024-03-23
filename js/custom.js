@@ -206,4 +206,42 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 3000)
     }
 
+
+    // Receber o SELETOR ocultar detalhes editar evento e apresentar o formulario editar evento
+    const btnViewEditEvento = document.getElementById("btnViewEditEvento");
+    if(btnViewEditEvento){
+
+        // Aguardar o usuário clicar no botão editar
+        btnViewEditEvento.addEventListener("click", () => {
+
+            // Ocultar os detalhes do evento
+            document.getElementById("visualizarEvento").style.display = "none";
+            document.getElementById("visualizarModalLabel").style.display = "none";
+
+            // Apresentar o formulário editar do evento
+            document.getElementById("editarEvento").style.display = "block";
+            document.getElementById("editarModalLabel").style.display = "block";
+        
+        });
+    }
+
+
+
+        // Receber o SELETOR ocultar formulário editar evento e apresentar o detalhe do evento
+        const btnViewEvento = document.getElementById("btnViewEvento");
+        if(btnViewEvento){
+    
+            // Aguardar o usuário clicar no botão editar
+            btnViewEvento.addEventListener("click", () => {
+                
+                // Ocultar os detalhes do evento
+                document.getElementById("visualizarEvento").style.display = "block";
+                document.getElementById("visualizarModalLabel").style.display = "block";
+    
+                // Apresentar o formulário editar do evento
+                document.getElementById("editarEvento").style.display = "none";
+                document.getElementById("editarModalLabel").style.display = "none";
+            
+            });
+        }
 });
