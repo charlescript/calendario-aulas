@@ -36,25 +36,32 @@
                     </div>
                     <div class="modal-body">
 
-                        <dl class="row">
+                        <div class="visualizarEvento">
+                            <dl class="row">
 
-                            <dt class="col-sm-3">ID: </dt>
-                            <dd class="col-sm-9" id="visualizar_id"></dd>
+                                <dt class="col-sm-3">ID: </dt>
+                                <dd class="col-sm-9" id="visualizar_id"></dd>
 
-                            <dt class="col-sm-3">Titulo: </dt>
-                            <dd class="col-sm-9" id="visualizar_title"></dd>
+                                <dt class="col-sm-3">Titulo: </dt>
+                                <dd class="col-sm-9" id="visualizar_title"></dd>
 
-                            <dt class="col-sm-3">Descrição: </dt>
-                            <dd class="col-sm-9" id="visualizar_description"></dd>
+                                <dt class="col-sm-3">Descrição: </dt>
+                                <dd class="col-sm-9" id="visualizar_description"></dd>
 
-                            <dt class="col-sm-3">Inicio: </dt>
-                            <dd class="col-sm-9" id="visualizar_start"></dd>
+                                <dt class="col-sm-3">Inicio: </dt>
+                                <dd class="col-sm-9" id="visualizar_start"></dd>
 
-                            <dt class="col-sm-3">Fim: </dt>
-                            <dd class="col-sm-9" id="visualizar_end"></dd>
+                                <dt class="col-sm-3">Fim: </dt>
+                                <dd class="col-sm-9" id="visualizar_end"></dd>
 
-                        </dl>
+                            </dl>
 
+                            <button class="btn btn-warning" id="btnViewEditEvento">Editar</button>
+                        </div>
+
+                        <div class="editarEvento">
+
+                        </div>
                     </div>
                 </div>
             </div>
