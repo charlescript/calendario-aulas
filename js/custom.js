@@ -3,9 +3,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var calendarEl = document.getElementById('calendar');
 
-    //Receber o seletor da janela modal
+    //Receber o seletor da janela modal cadastrar
     const cadastrarModal = new bootstrap.Modal(document.getElementById("cadastrarModal"));
 
+    //Receber o seletor da janela modal visualizar
+    const visualizarModal = new bootstrap.Modal(document.getElementById("visualizarModal"));
+
+
+    // Instanciar FullCalendar.Calendar e atribuir a variável calendar
     var calendar = new FullCalendar.Calendar(calendarEl, {
 
         // Incluindo o Bootstrap 5
@@ -46,10 +51,13 @@ document.addEventListener('DOMContentLoaded', function () {
         // Identificar o clique do usuário sobre o evento
         eventClick: function (info) {
 
-            // console.log(info.event.title)
-            // console.log(info.event.description)
-            //Receber o seletor da janela modal visualizar
-            const visualizarModal = new bootstrap.Modal(document.getElementById("visualizarModal"));
+            // Apresentar os detalhes do evento
+            document.getElementById("visualizarEvento").style.display = "block";
+            document.getElementById("visualizarModalLabel").style.display = "block";
+
+            // Ocultar o formulário editar do evento
+            document.getElementById("editarEvento").style.display = "none";
+            document.getElementById("editarModalLabel").style.display = "none";
 
             // Enviar para a janela modal os dados do evento
             document.getElementById("visualizar_id").innerText = info.event.id;
@@ -246,11 +254,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Aguardar o usuário clicar no botão editar
         btnViewEvento.addEventListener("click", () => {
 
-            // Ocultar os detalhes do evento
+            // Apresentar os detalhes do evento
             document.getElementById("visualizarEvento").style.display = "block";
             document.getElementById("visualizarModalLabel").style.display = "block";
 
-            // Apresentar o formulário editar do evento
+            // Ocultar o formulário editar do evento
             document.getElementById("editarEvento").style.display = "none";
             document.getElementById("editarModalLabel").style.display = "none";
 
@@ -269,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Somente acessa o IF quando existir o SELETOR "formEditEvento"
-    if(formEditEvento) {
+    if (formEditEvento) {
 
         // Aguardar o usuário clicar no botão editar
         formEditEvento.addEventListener("submit", async (e) => {
@@ -294,26 +302,48 @@ document.addEventListener('DOMContentLoaded', function () {
             const resposta = await dados.json();
 
             // Acessa o IF quando não editar com sucesso
-            if(!resposta['status']) {
+            if (!resposta['status']) {
 
                 // Enviar a mensagem para o HTML
-                msgEditEvento.innerHTML = `<div class="alert alert-danger" role="alert"> ${resposta['msg']} </div>`;
+                msgEditEvento.innerHTML = `
+                <div class="alert alert-danger" role="alert"> 
+                    ${resposta['msg']} 
+                </div>`;
 
             } else {
 
-               // Enviar a mensagem para o HTML
-               msg.innerHTML = `
+                // Enviar a mensagem para o HTML
+                msg.innerHTML = `
                <div class="alert alert-success" role="alert">
                     ${resposta['msg']},
                     ${resposta['title']}
                </div>`;
 
                 //Envia a mensagem para o HTML
-                msgEditEvento.innerHTML="";
-
+                msgEditEvento.innerHTML = "";
 
                 // Limpar o formulario
                 formEditEvento.reset();
+
+                // Recuperar o evento no FullCalendar pelo id
+                const eventoExiste = calendar.getEventById(resposta['id']);
+
+                // Verificar se encontrou o evento no FullCalendar pelo id
+                if (eventoExiste) {
+
+                    // Atualizar os atributos do evento com os novos valores do banco de dados
+                    eventoExiste.setProp('title', resposta['title']);
+                    eventoExiste.setProp('description', resposta['description']);
+                    eventoExiste.setProp('color', resposta['color']);
+                    eventoExiste.setStart(resposta['start']);
+                    eventoExiste.setEnd(resposta['end']);
+                }
+
+                // Chamar a função para remover a mensagem após 3 segundos
+                removeMsg();
+
+                // Fechar a janela modal
+                visualizarModal.hide();
             }
 
             // Apresentar no botão o texto salvar
