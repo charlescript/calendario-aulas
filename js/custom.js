@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var calendarEl = document.getElementById('calendar');
 
-     //Receber o seletor da janela modal
-     const cadastrarModal = new bootstrap.Modal(document.getElementById("cadastrarModal"));
+    //Receber o seletor da janela modal
+    const cadastrarModal = new bootstrap.Modal(document.getElementById("cadastrarModal"));
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
 
@@ -46,14 +46,16 @@ document.addEventListener('DOMContentLoaded', function () {
         // Identificar o clique do usuário sobre o evento
         eventClick: function (info) {
 
+            // console.log(info.event.title)
+            // console.log(info.event.description)
             //Receber o seletor da janela modal visualizar
             const visualizarModal = new bootstrap.Modal(document.getElementById("visualizarModal"));
 
             // Enviar para a janela modal os dados do evento
             document.getElementById("visualizar_id").innerText = info.event.id;
-            document.getElementById("visualizar_title").innerText = info.event.description;
-            document.getElementById("visualizar_description").innerText = info.event.title;
-  
+            document.getElementById("visualizar_title").innerText = info.event.title;
+            document.getElementById("visualizar_description").innerText = info.event.description;
+
             // Verificar se info.event.start e info.event.end são válidos antes de chamar toLocaleString()
             if (info.event.start && info.event.end) {
                 document.getElementById("visualizar_start").innerText = info.event.start.toLocaleString();
@@ -66,16 +68,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById("visualizar_end").innerText = info.event.end !== null ? info.event.end.toLocaleString() : info.event.start.toLocaleString();
             }
 
+
+            // Enviar os dados do evento para o formulário editar
+            document.getElementById("edit_id").value = info.event.id;
+            document.getElementById("edit_title").value = info.event.title;
+            document.getElementById("edit_description").value = info.event.description;
+            document.getElementById("edit_start").value = converterData(info.event.start);
+            document.getElementById("edit_end").value = info.event.end !== null ? converterData(info.event.end) : converterData(info.event.start);
+            document.getElementById("edit_color").value = info.event.backgroundColor;
+
+
             // Abrir a janela modal visualizar
             visualizarModal.show();
         },
 
         // Abrir uma janela modal cadastrar quando clicar sobre o dia no calendário
         select: function (info) {
-           
+
             // Chamar a função para converter a data selecionada para ISO8601 e enviar para o formulário
             document.getElementById("cad_start").value = converterData(info.start);
-            document.getElementById("cad_end").value = converterData(info.end-1);
+            document.getElementById("cad_end").value = converterData(info.end - 1);
 
             cadastrarModal.show();
         }
@@ -96,16 +108,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const ano = dataObj.getFullYear();
 
         //Obter o mês, mês começa de 0, padStart adiciona zeros à esquerda para garantir que o mês tenha 2 dígitos 
-        const mes = String(dataObj.getMonth() + 1).padStart(2,'0');
+        const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
 
         // Obter o dia do mês, padStart adiciona zeros à esquerda para garantir que o dia tenha 2 dígitos
-        const dia = String(dataObj.getDate()).padStart( 2,'0' );
+        const dia = String(dataObj.getDate()).padStart(2, '0');
 
         // Obter a hora, padStart adiciona zeros à esquerda para garantir que a hora tenha dois dígitos
-        const hora = String(dataObj.getHours()).padStart( 2,'0' );
+        const hora = String(dataObj.getHours()).padStart(2, '0');
 
         // Obter minuto, padStart adiciona zeros à esquerda para garantir que o minuto tenha 2 digitos
-        const minuto = String(dataObj.getMinutes()).padStart( 2,'0' );
+        const minuto = String(dataObj.getMinutes()).padStart(2, '0');
 
         // Retornar a data
         return `${ano}-${mes}-${dia} ${hora}:${minuto}`;
@@ -126,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnCadEvento = document.getElementById("btnCadEvento");
 
     // Somente acessa o IF quando existir o SELETOR "formCadEvento"
-    if(formCadEvento){
+    if (formCadEvento) {
 
         //Aguardar o usuario clicar no botão cadastrar
         formCadEvento.addEventListener("submit", async (e) => {
@@ -148,21 +160,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
             //Realizar a leitura dos dados retornados pelo PHP no arquivo cadastrar_eventos.php
             const resposta = await dados.json();
-            
+
 
             // Acessa o IF quando não cadastrar com sucesso
-            if(!resposta['status']){
+            if (!resposta['status']) {
 
                 // Enviar a mensagem para o HTML
-                msgCadEvento.innerHTML =`
+                msgCadEvento.innerHTML = `
                     <div class="alert alert-danger" role="alert">
                         ${resposta['msg']}
-                    </div>`; 
+                    </div>`;
 
             } else {
 
                 // Enviar a mensagem para o HTML
-                msg.innerHTML =`
+                msg.innerHTML = `
                     <div class="alert alert-success" role="alert">
                          ${resposta['msg']},
                          ${resposta['title']}
@@ -172,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 msgCadEvento.innerHTML = "";
 
                 // Limpar o formulário
-                formCadEvento.reset(); 
+                formCadEvento.reset();
 
                 //Criar o objeto com os dados do evento
                 const novoEvento = {
@@ -209,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Receber o SELETOR ocultar detalhes editar evento e apresentar o formulario editar evento
     const btnViewEditEvento = document.getElementById("btnViewEditEvento");
-    if(btnViewEditEvento){
+    if (btnViewEditEvento) {
 
         // Aguardar o usuário clicar no botão editar
         btnViewEditEvento.addEventListener("click", () => {
@@ -221,27 +233,93 @@ document.addEventListener('DOMContentLoaded', function () {
             // Apresentar o formulário editar do evento
             document.getElementById("editarEvento").style.display = "block";
             document.getElementById("editarModalLabel").style.display = "block";
-        
+
         });
     }
 
 
 
-        // Receber o SELETOR ocultar formulário editar evento e apresentar o detalhe do evento
-        const btnViewEvento = document.getElementById("btnViewEvento");
-        if(btnViewEvento){
-    
-            // Aguardar o usuário clicar no botão editar
-            btnViewEvento.addEventListener("click", () => {
-                
-                // Ocultar os detalhes do evento
-                document.getElementById("visualizarEvento").style.display = "block";
-                document.getElementById("visualizarModalLabel").style.display = "block";
-    
-                // Apresentar o formulário editar do evento
-                document.getElementById("editarEvento").style.display = "none";
-                document.getElementById("editarModalLabel").style.display = "none";
-            
+    // Receber o SELETOR ocultar formulário editar evento e apresentar o detalhe do evento
+    const btnViewEvento = document.getElementById("btnViewEvento");
+    if (btnViewEvento) {
+
+        // Aguardar o usuário clicar no botão editar
+        btnViewEvento.addEventListener("click", () => {
+
+            // Ocultar os detalhes do evento
+            document.getElementById("visualizarEvento").style.display = "block";
+            document.getElementById("visualizarModalLabel").style.display = "block";
+
+            // Apresentar o formulário editar do evento
+            document.getElementById("editarEvento").style.display = "none";
+            document.getElementById("editarModalLabel").style.display = "none";
+
+        });
+    }
+
+
+    // Receber o seletor do formulário editar evento
+    const formEditEvento = document.getElementById("formEditEvento");
+
+    // Receber o SELETOR da mensagem editar evento msgEditEvento
+    const msgEditEvento = document.getElementById("msgEditEvento");
+
+    // Receber o SELETOR do botão editar evento
+    const btnEditEvento = document.getElementById("btnEditEvento");
+
+
+    // Somente acessa o IF quando existir o SELETOR "formEditEvento"
+    if(formEditEvento) {
+
+        // Aguardar o usuário clicar no botão editar
+        formEditEvento.addEventListener("submit", async (e) => {
+
+            // Não permitir a atualização da pagina
+            e.preventDefault();
+
+            // Apresentar no botão o texto salvando
+            btnEditEvento.value = "Salvando edição..."
+
+            // Receber os dados do formulário
+            const dadosForm = new FormData(formEditEvento);
+
+
+            // Chamar o arquivo PHP responsável em editar o evento
+            const dados = await fetch("editar_evento.php", {
+                method: "POST",
+                body: dadosForm
             });
-        }
+
+            // Realizar a leitura dos dados retornados pelo PHP
+            const resposta = await dados.json();
+
+            // Acessa o IF quando não editar com sucesso
+            if(!resposta['status']) {
+
+                // Enviar a mensagem para o HTML
+                msgEditEvento.innerHTML = `<div class="alert alert-danger" role="alert"> ${resposta['msg']} </div>`;
+
+            } else {
+
+               // Enviar a mensagem para o HTML
+               msg.innerHTML = `
+               <div class="alert alert-success" role="alert">
+                    ${resposta['msg']},
+                    ${resposta['title']}
+               </div>`;
+
+                //Envia a mensagem para o HTML
+                msgEditEvento.innerHTML="";
+
+
+                // Limpar o formulario
+                formEditEvento.reset();
+            }
+
+            // Apresentar no botão o texto salvar
+            btnEditEvento.value = "Salvar";
+
+        });
+    }
+
 });
