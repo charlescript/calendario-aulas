@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // Atualizar os atributos do evento com os novos valores do banco de dados
                     eventoExiste.setProp('title', resposta['title']);
-                    eventoExiste.setProp('description', resposta['description']);
+                    eventoExiste.setExtendedProp('description', resposta['description']);
                     eventoExiste.setProp('color', resposta['color']);
                     eventoExiste.setStart(resposta['start']);
                     eventoExiste.setEnd(resposta['end']);
