@@ -4,7 +4,8 @@
 include_once './conexao.php';
 
 // Query para recuperar eventos
-$query_events = "SELECT id, title, description, color, start, end from events";
+$query_events = "SELECT id, title, description, color, start, end 
+                 FROM events";
 
 //PREPARA A QUERY
 $result_events = $conn->prepare($query_events);

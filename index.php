@@ -15,17 +15,13 @@
 
 <body>
 
-    <div class="global">
+    <div class="container">
+        
         <h2 class="mb-5 titulo-agenda">Agenda</h2>
         <span id="msg"></span>
-
         <div id='calendar'></div>
 
-        <!-- Button trigger modal -->
-        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
-        </button> -->
-
+    </div>
         <!-- Modal Visualisar-->
         <div class="modal fade" id="visualizarModal" tabindex="-1" aria-labelledby="visualizarModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -39,6 +35,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+
+                        <span id="msgViewEvento"></span>
 
                         <div id="visualizarEvento">
                             <dl class="row">
@@ -60,7 +58,9 @@
 
                             </dl>
 
-                            <button class="btn btn-warning" id="btnViewEditEvento">Editar</button>
+                            <button type="button" class="btn btn-warning" id="btnViewEditEvento">Editar</button>
+
+                            <button type="button" class="btn btn-danger" id="btnApagarEvento">Apagar</button>
                         </div>
 
                         <!-- EDIÇÃO DE EVENTO -->
@@ -226,7 +226,7 @@
         <script src="js/bootstrap5/index.global.min.js"></script>
         <script src='js/core/locales-all.global.min.js'></script>
         <script src="js/custom.js"></script>
-    </div>
+
 </body>
 
 </html>
