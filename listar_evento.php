@@ -4,8 +4,11 @@
 include_once './conexao.php';
 
 // Query para recuperar eventos
-$query_events = "SELECT id, title, description, color, start, end 
-                 FROM events";
+$query_events = "SELECT evt.id, evt.title, evt.description, evt.color, evt.start, evt.end,
+                  usr.id as user_id, usr.nome as user_nome, usr.email as user_email
+                    FROM tb_events as evt
+                        INNER JOIN tb_event_user AS ev_us ON ev_us.id_event = evt.id
+                            INNER JOIN tb_users as usr ON usr.id = ev_us.id_user";
 
 //PREPARA A QUERY
 $result_events = $conn->prepare($query_events);
@@ -29,6 +32,9 @@ while($row_events = $result_events->fetch(PDO::FETCH_ASSOC)){
         'color' => $color,
         'start' => $start,
         'end' => $end,
+        'user_id' => $user_id,
+        'user_nome' => $user_nome,
+        'user_email' => $user_email,
     ];
 }
 

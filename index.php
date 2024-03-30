@@ -41,7 +41,7 @@
                         <div id="visualizarEvento">
                             <dl class="row">
 
-                                <dt class="col-sm-3">ID: </dt>
+                                <dt class="col-sm-3">ID evento: </dt>
                                 <dd class="col-sm-9" id="visualizar_id"></dd>
 
                                 <dt class="col-sm-3">Titulo: </dt>
@@ -55,6 +55,17 @@
 
                                 <dt class="col-sm-3">Fim: </dt>
                                 <dd class="col-sm-9" id="visualizar_end"></dd>
+                                
+                                <hr/>
+
+                                <dt class="col-sm-4">ID do participante: </dt>
+                                <dd class="col-sm-8" id="visualizar_user_id"></dd>
+
+                                <dt class="col-sm-4">Nome participante: </dt>
+                                <dd class="col-sm-8" id="visualizar_user_nome"></dd>
+
+                                <dt class="col-sm-4">Email participante: </dt>
+                                <dd class="col-sm-8" id="visualizar_user_email"></dd>
 
                             </dl>
 
@@ -124,6 +135,16 @@
                                             <option style="color: #48D1CC; background-color: black;" value="#48D1CC">Turquesa Média</option>
                                             <option style="color: #E6E6FA; background-color: black;" value="#E6E6FA">Lavanda</option>
                                             <option style="color: #FFD700; background-color: black;" value="#FFD700">Amarelo</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
+                                    <label for="edit_user_id" class="col-sm-2 col-form-label">Participante</label>
+                                    <div class="col-sm-10">
+                                        <select name="edit_user_id" class="form-control" id="edit_user_id">
+                                            <option value="">Selecione</option>
                                         </select>
                                     </div>
                                 </div>
@@ -207,6 +228,16 @@
                                         <option style="color: #48D1CC; background-color: black;" value="#48D1CC">Turquesa Média</option>
                                         <option style="color: #E6E6FA; background-color: black;" value="#E6E6FA">Lavanda</option>
                                         <option style="color: #FFD700; background-color: black;" value="#FFD700">Amarelo</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-3">
+                                <label for="cad_user_id" class="col-sm-2 col-form-label">Participante</label>
+                                <div class="col-sm-10">
+                                    <select name="cad_user_id" class="form-control" id="cad_user_id">
+                                        <option value="">Selecione</option>
                                     </select>
                                 </div>
                             </div>
