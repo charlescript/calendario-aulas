@@ -67,6 +67,7 @@ if ($cad_event->execute()) {
             'user_nome' => $row_user['nome'],
             'user_email' => $row_user['email'],
         ];
+
     } else {
         // Se a inserção da associação falhar, você pode tratar o erro aqui
         $retorna = [

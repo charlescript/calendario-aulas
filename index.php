@@ -17,9 +17,35 @@
 
     <div class="container">
         
-        <h2 class="mb-5 titulo-agenda">Agenda</h2>
-        <span id="msg"></span>
-        <div id='calendar'></div>
+        <div class="card mb-4 border-light shadow">
+            <div class="card-body"> 
+
+                <h2 class="mt-0 me-3 ms-2 pb-2 border-bottom titulo-agenda">Agenda</h2>
+                <span id="msg"></span>
+
+                <form class="ms-2 m2-2">
+                    
+                    <div class="col-md-6 col-sm-12">
+                        <label class="form-label" for="user_id">Pesquisar metérias do professor:</label>
+
+                        <select name="user_id" id="user_id" class="form-select">
+                            <option value="">Selecione</option>
+                        </select>
+
+                    </div>
+                
+                </form>
+
+            </div>
+        </div>
+
+        <div class="card p-4 border-light shadow">
+            <div class="card-body"> 
+
+                <div id='calendar'></div>
+
+            </div>
+        </div>
 
     </div>
         <!-- Modal Visualisar-->
