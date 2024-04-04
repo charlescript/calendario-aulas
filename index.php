@@ -50,7 +50,7 @@
     </div>
         <!-- Modal Visualisar-->
         <div class="modal fade" id="visualizarModal" tabindex="-1" aria-labelledby="visualizarModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
 
@@ -66,7 +66,7 @@
 
                         <div id="visualizarEvento">
                             <dl class="row">
-
+                                <!-- DADOS DO EVENTO -->
                                 <dt class="col-sm-3">ID evento: </dt>
                                 <dd class="col-sm-9" id="visualizar_id"></dd>
 
@@ -83,15 +83,26 @@
                                 <dd class="col-sm-9" id="visualizar_end"></dd>
                                 
                                 <hr/>
-
-                                <dt class="col-sm-4">ID do participante: </dt>
+                                <!-- DADOS DO PROFESSOR -->
+                                <dt class="col-sm-4">ID do professor: </dt>
                                 <dd class="col-sm-8" id="visualizar_user_id"></dd>
 
-                                <dt class="col-sm-4">Nome participante: </dt>
+                                <dt class="col-sm-4">Nome professor: </dt>
                                 <dd class="col-sm-8" id="visualizar_user_nome"></dd>
 
-                                <dt class="col-sm-4">Email participante: </dt>
+                                <dt class="col-sm-4">Email professor: </dt>
                                 <dd class="col-sm-8" id="visualizar_user_email"></dd>
+
+                                <hr/>
+                                <!-- DADOS DA TURMA -->
+                                <dt class="col-sm-4">ID da Turma: </dt>
+                                <dd class="col-sm-8" id="visualizar_turma_id"></dd>
+
+                                <dt class="col-sm-4">Nome da Turma: </dt>
+                                <dd class="col-sm-8" id="visualizar_turma_nome"></dd>
+
+                                <dt class="col-sm-4">Descrição Turma: </dt>
+                                <dd class="col-sm-8" id="visualizar_turma_descricao"></dd>
 
                             </dl>
 
@@ -167,9 +178,18 @@
 
 
                                 <div class="row mb-3">
-                                    <label for="edit_user_id" class="col-sm-2 col-form-label">Participante</label>
+                                    <label for="edit_user_id" class="col-sm-2 col-form-label">Professor</label>
                                     <div class="col-sm-10">
                                         <select name="edit_user_id" class="form-control" id="edit_user_id">
+                                            <option value="">Selecione</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="edit_turma_id" class="col-sm-2 col-form-label">Turma</label>
+                                    <div class="col-sm-10">
+                                        <select name="edit_turma_id" class="form-control" id="edit_turma_id">
                                             <option value="">Selecione</option>
                                         </select>
                                     </div>
@@ -190,7 +210,7 @@
 
         <!-- Modal Cadastrar-->
         <div class="modal fade" id="cadastrarModal" tabindex="-1" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="cadastrarModalLabel">Cadastrar evento</h1>
@@ -260,10 +280,19 @@
 
 
                             <div class="row mb-3">
-                                <label for="cad_user_id" class="col-sm-2 col-form-label">Participante</label>
+                                <label for="cad_user_id" class="col-sm-2 col-form-label">Professor</label>
                                 <div class="col-sm-10">
                                     <select name="cad_user_id" class="form-control" id="cad_user_id">
-                                        <option value="">Selecione</option>
+                                        <option value="">Selecione Professor</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="cad_turma_id" class="col-sm-2 col-form-label">Turma</label>
+                                <div class="col-sm-10">
+                                    <select name="cad_turma_id" class="form-control" id="cad_turma_id">
+                                        <option value="">Selecione Turma</option>
                                     </select>
                                 </div>
                             </div>

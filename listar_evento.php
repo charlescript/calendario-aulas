@@ -11,11 +11,20 @@ $user_id = filter_input(INPUT_GET, 'user_id', FILTER_SANITIZE_NUMBER_INT );
 if(!empty($user_id)){
 
     // Query para recuperar eventos fazendo inner joins com a tabela de resolução tb_event_user e tabela tb_users
+    // $query_events = "SELECT evt.id, evt.title, evt.description, evt.color, evt.start, evt.end,
+    // usr.id as user_id, usr.nome as user_nome, usr.email as user_email
+    // FROM tb_events as evt
+    //     INNER JOIN tb_event_user AS ev_us ON ev_us.id_event = evt.id
+    //         INNER JOIN tb_users as usr ON usr.id = ev_us.id_user
+    //             WHERE usr.id = :user_id";
+
     $query_events = "SELECT evt.id, evt.title, evt.description, evt.color, evt.start, evt.end,
-    usr.id as user_id, usr.nome as user_nome, usr.email as user_email
+    usr.id as user_id, usr.nome as user_nome, usr.email as user_email, tm.id as id_turma, tm.nome as nome_turma, tm.descricao as descricao_turma
     FROM tb_events as evt
         INNER JOIN tb_event_user AS ev_us ON ev_us.id_event = evt.id
             INNER JOIN tb_users as usr ON usr.id = ev_us.id_user
+                INNER JOIN tb_turma_event as tm_ev ON tm_ev.id_event = evt.id
+                    INNER JOIN tb_turma as tm ON tm.id = tm_ev.id_turma
                 WHERE usr.id = :user_id";
 
     //PREPARA A QUERY
@@ -27,11 +36,20 @@ if(!empty($user_id)){
 } else {
 
     // Query para recuperar eventos fazendo inner joins com a tabela de resolução tb_event_user e tabela tb_users
+
+    // $query_events = "SELECT evt.id, evt.title, evt.description, evt.color, evt.start, evt.end,
+    // usr.id as user_id, usr.nome as user_nome, usr.email as user_email
+    // FROM tb_events as evt
+    //     INNER JOIN tb_event_user AS ev_us ON ev_us.id_event = evt.id
+    //         INNER JOIN tb_users as usr ON usr.id = ev_us.id_user";
+
     $query_events = "SELECT evt.id, evt.title, evt.description, evt.color, evt.start, evt.end,
-    usr.id as user_id, usr.nome as user_nome, usr.email as user_email
+    usr.id as user_id, usr.nome as user_nome, usr.email as user_email, tm.id as id_turma, tm.nome as nome_turma, tm.descricao as descricao_turma
     FROM tb_events as evt
         INNER JOIN tb_event_user AS ev_us ON ev_us.id_event = evt.id
-            INNER JOIN tb_users as usr ON usr.id = ev_us.id_user";
+            INNER JOIN tb_users as usr ON usr.id = ev_us.id_user
+                INNER JOIN tb_turma_event as tm_ev ON tm_ev.id_event = evt.id
+                    INNER JOIN tb_turma as tm ON tm.id = tm_ev.id_turma";
 
     //PREPARA A QUERY
     $result_events = $conn->prepare($query_events);
@@ -62,6 +80,9 @@ while($row_events = $result_events->fetch(PDO::FETCH_ASSOC)){
         'user_id' => $user_id,
         'user_nome' => $user_nome,
         'user_email' => $user_email,
+        'id_turma' => $id_turma,
+        'nome_turma' => $nome_turma,
+        'descricao_turma' => $descricao_turma,
     ];
 }
 

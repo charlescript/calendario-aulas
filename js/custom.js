@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Definir o idioma usado no calendário
             locale: 'pt-br',
 
-            initialDate: '2024-01-12',
+            initialDate: '2024-04-12',
             //initialDate: '2024-03-18',
 
             // Permitir clicar nos nomes dos dias da semanda
@@ -79,6 +79,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById("visualizar_user_nome").innerText = info.event.extendedProps.user_nome;
                 document.getElementById("visualizar_user_email").innerText = info.event.extendedProps.user_email;
 
+                document.getElementById("visualizar_turma_id").innerText = info.event.extendedProps.turma_id;
+                document.getElementById("visualizar_turma_nome").innerText = info.event.extendedProps.turma_nome;
+                document.getElementById("visualizar_turma_descricao").innerText = info.event.extendedProps.turma_descricao;
+
+                
 
                 // Verificar se info.event.start e info.event.end são válidos antes de chamar toLocaleString()
                 if (info.event.start && info.event.end) {
@@ -113,12 +118,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 var cadUserId = document.getElementById('cad_user_id');
 
                 // Chamar o arquivo PHP responsável por recuperar os usuários do banco de dados
-                const dados = await fetch('listar_usuarios.php');
+                const dados = await fetch('listar_usuarios.php?profissional=professor');
 
                 // Ler dados retornados de listar_usuarios.php
                 const resposta = await dados.json();
                 //console.log(resposta);
-
+                
+                // Acessar o IF quando encontrar usuário no banco de dados
                 if (resposta['status']) {
 
                     // Criar a opção selecione para o campo select usuário
@@ -141,6 +147,45 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Enviar a opção vazia para o campo select no HTML
                     cadUserId.innerHTML = `<option value="">${resposta['msg']}</option>`;
                 }
+
+
+
+                // Receber o seletor do campo turma do formulário cadastrar
+                var cadTurmaId = document.getElementById('cad_turma_id');
+
+                // Chamar o arquivo PHP responsável por recuperar os turmas do banco de dados
+                // const dadosTurma = await fetch('listar_usuarios.php');
+                const dadosTurma = await fetch('listar_turmas.php');
+
+                // Ler dados retornados de listar_usuarios.php
+                const respostaTurma = await dadosTurma.json();
+                //console.log(respostaTurma);
+                
+                // Acessar o IF quando encontrar turma no banco de dados
+                if (respostaTurma['status']) {
+
+                    // Criar a opção selecione para o campo select turma
+                    var opcoes = '<option value=""> Selecione </option>';
+
+                    // Percorrer a lista de turmas
+                    for (var i = 0; i < respostaTurma.dados.length; i++) {
+
+                        //Criar a lista de opções para o campo select turmas
+                        opcoes += `<option value="${respostaTurma.dados[i]['id']}"> 
+                                    ${respostaTurma.dados[i]['nome']} 
+                              </option>`;
+                    }
+
+                    // Enviar opções para o campo select no HTML
+                    cadTurmaId.innerHTML = opcoes;
+
+                } else {
+
+                    // Enviar a opção vazia para o campo select no HTML
+                    cadTurmaId.innerHTML = `<option value="">${respostaTurma['msg']}</option>`;
+                }
+
+
 
                 // Chamar a função para converter a data selecionada para ISO8601 e enviar para o formulário
                 document.getElementById("cad_start").value = converterData(info.start);
@@ -294,8 +339,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         start: resposta['start'],
                         end: resposta['end'],
                         user_id: resposta['user_id'],
+                        user_nome: resposta['user_nome'],
+                        user_email: resposta['user_email'],
+                        user_id: resposta['user_id'],
                         name: resposta['user_nome'],
                         email: resposta['user_email'],
+                        turma_id: resposta['turma_id'],
+                        turma_nome: resposta['turma_nome'],
+                        turma_descricao: resposta['turma_descricao'],
                     }
 
                     // Adicionar o evento ao calendário
@@ -353,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var editUserId = document.getElementById('edit_user_id');
 
             // Chamar o arquivo PHP responsável por recuperar os usuários do banco de dados
-            const dados = await fetch('listar_usuarios.php');
+            const dados = await fetch('listar_usuarios.php?profissional=professor');
 
             // Ler dados retornados de listar_usuarios.php
             const resposta = await dados.json();
@@ -380,6 +431,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Enviar a opção vazia para o campo select no HTML
                 editUserId.innerHTML = `<option value="">${resposta['msg']}</option>`;
+
+            }
+
+
+
+
+            // Receber o seletor do campo turmas do formulário editar
+            var editUserId = document.getElementById('edit_user_id');
+
+            // Chamar o arquivo PHP responsável por recuperar os turmass do banco de dados
+            const dadosTurma = await fetch('listar_usuarios.php');
+
+            // Ler dados retornados de listar_usuarios.php
+            const respostaTurma = await dadosTurma.json();
+            //console.log(respostaTurma);
+
+            if (respostaTurma['status']) {
+
+                // Criar a opção selecione para o campo select turmas
+                var opcoes = '<option value=""> Selecione </option>';
+
+                // Percorrer a lista de turmass
+                for (var i = 0; i < respostaTurma.dados.length; i++) {
+
+                    //Criar a lista de opções para o campo select turmass
+                    opcoes += `<option value="${respostaTurma.dados[i]['id']}" ${ editUserId === respostaTurma.dados[i]['id'] ? 'selected' :  ""  }> 
+                                     ${respostaTurma.dados[i]['nome']} 
+                               </option>`;
+                }
+
+                // Enviar opções para o campo select no HTML
+                editUserId.innerHTML = opcoes;
+
+            } else {
+
+                // Enviar a opção vazia para o campo select no HTML
+                editUserId.innerHTML = `<option value="">${respostaTurma['msg']}</option>`;
 
             }
 

@@ -14,6 +14,7 @@ create table tb_events (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
 CREATE TABLE tb_users (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
@@ -26,6 +27,7 @@ CREATE TABLE tb_users (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
 create table tb_event_user (
 	id int auto_increment primary key ,
     id_event int not null,
@@ -34,44 +36,54 @@ create table tb_event_user (
     CONSTRAINT `fk_user_event` FOREIGN KEY (`id_user`) REFERENCES `tb_users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-truncate tb_event_user;
+
+
+CREATE TABLE tb_turma (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    descricao VARCHAR(500)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO tb_turma ( nome, descricao ) VALUES ( "DS1 - NOITE 3º CICLO", "Turma responsável por aprender as bases dos sistemas." ),
+												( "DS2 - NOITE 4º CICLO", "Turma responsável por aprender diagramas UML");
+
+CREATE TABLE tb_turma_users (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_turma INT NOT NULL,
+    id_user INT NOT NULL,
+    CONSTRAINT fk_turma_user_turma FOREIGN KEY (id_turma) REFERENCES tb_turma(id) ON DELETE CASCADE,
+    CONSTRAINT fk_turma_user_user FOREIGN KEY (id_user) REFERENCES tb_users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE tb_turma_event (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_turma INT NOT NULL,
+    id_event INT NOT NULL,
+    CONSTRAINT fk_turma_event_turma FOREIGN KEY (id_turma) REFERENCES tb_turma(id) ON DELETE CASCADE,
+    CONSTRAINT fk_turma_event_event FOREIGN KEY (id_event) REFERENCES tb_events(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 show tables;
-select * from tb_events;
+
 select * from tb_users;
+select * from tb_events;
 select * from tb_event_user;
+select * from tb_turma;
+select * from tb_turma_event;
+
+insert into tb_turma_event (id_turma, id_event) VALUES( 1, 94);
+insert into tb_turma_event (id_turma, id_event) VALUES( 1, 95);
 
 
-
-
-INSERT INTO tb_users (nome, cpf, email, senha, senha_crip, nivel, dt_cadastro) VALUES
-('João Silva', '123.456.789-00', 'joao@example.com', 'senha123', 'crypted_password_1', 'admin', NOW()),
-('Maria Oliveira', '987.654.321-00', 'maria@example.com', 'senha456', 'crypted_password_2', 'user', NOW()),
-('Pedro Santos', '111.222.333-44', 'pedro@example.com', 'senha789', 'crypted_password_3', 'user', NOW()),
-('Ana Souza', '555.666.777-88', 'ana@example.com', 'senhaabc', 'crypted_password_4', 'user', NOW());
-
-ALTER TABLE tb_event_user AUTO_INCREMENT = 21;
-
-INSERT INTO tb_event_user(id_event, id_user) VALUES (1,1), (2, 1),
- (3, 1),
- (4, 1),
- (5, 1),
- (6, 1),
- (7, 1),
- (8, 1),
- (9, 1),
- (10, 1),
- (11, 1),
- (12, 1),
- (13, 1),
- (14, 1),
- (15, 1),
- (16, 1),
- (17, 1),
- (18, 1),
- (19, 1),
- (20, 1);
+SELECT evt.id, evt.title, evt.description, evt.color, evt.start, evt.end,
+    usr.id as user_id, usr.nome as user_nome, usr.email as user_email, tm.id as id_turma, tm.nome as nome_turma, tm.descricao as descricao_turma
+    FROM tb_events as evt
+        INNER JOIN tb_event_user AS ev_us ON ev_us.id_event = evt.id
+            INNER JOIN tb_users as usr ON usr.id = ev_us.id_user
+                INNER JOIN tb_turma_event as tm_ev ON tm_ev.id_event = evt.id
+                    INNER JOIN tb_turma as tm ON tm.id = tm_ev.id_turma
+                WHERE usr.id = 2;
 
 
 
