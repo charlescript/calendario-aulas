@@ -435,13 +435,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
 
-
+            // Receber o id da turma participante do evento
+            var turmaId = document.getElementById("visualizar_turma_id").innerText;
 
             // Receber o seletor do campo turmas do formulário editar
-            var editUserId = document.getElementById('edit_user_id');
+            var editTurmaId = document.getElementById('edit_turma_id');
 
             // Chamar o arquivo PHP responsável por recuperar os turmass do banco de dados
-            const dadosTurma = await fetch('listar_usuarios.php');
+            const dadosTurma = await fetch('listar_turmas.php');
 
             // Ler dados retornados de listar_usuarios.php
             const respostaTurma = await dadosTurma.json();
@@ -456,18 +457,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 for (var i = 0; i < respostaTurma.dados.length; i++) {
 
                     //Criar a lista de opções para o campo select turmass
-                    opcoes += `<option value="${respostaTurma.dados[i]['id']}" ${ editUserId === respostaTurma.dados[i]['id'] ? 'selected' :  ""  }> 
+                    opcoes += `<option value="${respostaTurma.dados[i]['id']}" ${ turmaId === respostaTurma.dados[i]['id'] ? 'selected' :  ""  }> 
                                      ${respostaTurma.dados[i]['nome']} 
                                </option>`;
                 }
 
                 // Enviar opções para o campo select no HTML
-                editUserId.innerHTML = opcoes;
+                editTurmaId.innerHTML = opcoes;
 
             } else {
 
                 // Enviar a opção vazia para o campo select no HTML
-                editUserId.innerHTML = `<option value="">${respostaTurma['msg']}</option>`;
+                editTurmaId.innerHTML = `<option value="">${respostaTurma['msg']}</option>`;
 
             }
 

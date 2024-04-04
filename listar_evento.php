@@ -80,9 +80,9 @@ while($row_events = $result_events->fetch(PDO::FETCH_ASSOC)){
         'user_id' => $user_id,
         'user_nome' => $user_nome,
         'user_email' => $user_email,
-        'id_turma' => $id_turma,
-        'nome_turma' => $nome_turma,
-        'descricao_turma' => $descricao_turma,
+        'turma_id' => $id_turma,
+        'turma_nome' => $nome_turma,
+        'turma_descricao' => $descricao_turma,
     ];
 }
 

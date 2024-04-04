@@ -85,5 +85,18 @@ SELECT evt.id, evt.title, evt.description, evt.color, evt.start, evt.end,
                     INNER JOIN tb_turma as tm ON tm.id = tm_ev.id_turma
                 WHERE usr.id = 2;
 
+desc tb_users;
+INSERT INTO tb_users (nome, cpf, email, senha, senha_crip, nivel, dt_cadastro)
+	VALUES('Charles', '123456789', 'rocha_charles@teste.com','123', MD5('123') ,'admin', now());
+    
+INSERT INTO tb_users (nome, cpf, email, senha, senha_crip, nivel, dt_cadastro)
+	VALUES('Rodrigo Salgado', '123456789', 'rodrigo@teste.com','123', MD5('123') ,'admin', now());
+    
+INSERT INTO tb_users (nome, cpf, email, senha, senha_crip, nivel, dt_cadastro)
+	VALUES('Paulo Candido', '123456789', 'paulo@teste.com','123', MD5('123') ,'admin', now());
+    
+INSERT INTO tb_users (nome, cpf, email, senha, senha_crip, nivel, dt_cadastro)
+	VALUES('Simone database', '123456789', 'database@teste.com','123', MD5('123') ,'admin', now());
 
 
+select * from tb_users;
