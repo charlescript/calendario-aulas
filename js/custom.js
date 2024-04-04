@@ -581,6 +581,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         eventoExiste.setExtendedProp('user_id', resposta['user_id']);
                         eventoExiste.setExtendedProp('user_nome', resposta['user_nome']);
                         eventoExiste.setExtendedProp('user_email', resposta['user_email']);
+                        eventoExiste.setExtendedProp('turma_id', resposta['turma_id']);
+                        eventoExiste.setExtendedProp('turma_nome', resposta['turma_nome']);
+                        eventoExiste.setExtendedProp('turma_descricao', resposta['turma_descricao']);
                     }
 
                 } else {
@@ -688,7 +691,7 @@ if (user) {
 async function listarUsuarios() {
 
     // Chamar o arquivo PHP para recuperar os usuários
-    const dados = await fetch('listar_usuarios.php');
+    const dados = await fetch('listar_usuarios.php?profissional=professor');
 
     // Ler os dados retornado do PHP
     const resposta = await dados.json();

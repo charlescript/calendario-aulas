@@ -187,6 +187,7 @@
                                 </div>
 
                                 <div class="row mb-3">
+                                    <!-- <input type="hidden" name="edit_turma_id_old" id="edit_turma_id_old"> -->
                                     <label for="edit_turma_id" class="col-sm-2 col-form-label">Turma</label>
                                     <div class="col-sm-10">
                                         <select name="edit_turma_id" class="form-control" id="edit_turma_id">
